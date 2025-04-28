@@ -2,6 +2,8 @@
 Streamlit app for analyzing the sentiment of recent Reddit posts by subreddit or keyword, including a sidebar chatbot for EIH support.
 """
 import os
+
+import openai
 import streamlit as st
 import praw
 from openai import OpenAI
@@ -130,7 +132,7 @@ subreddit_name = st.selectbox(
 
 search_term = st.selectbox(
     "Choose a keyword (optional):",
-    options=["tent", "encampment", "shelter", "housing", "crime", "safety",
+    options=["encampment", "tent", "shelter", "housing", "crime", "safety",
              "jobs", "mental health", "community", "sweeps",
              "displacement", 'eviction', "homelessness"],
     index=0
@@ -199,39 +201,40 @@ if st.button("Analyze"):
 st.markdown("---")
 st.caption("Provided by the Sapphire Team 💎 • Powered by OpenAI & Streamlit")
 
-#------------------------------------------------------------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # chatbot on the side
-st.sidebar.title("💬 HelpBot")
+st.sidebar.title("💬 AI Housing Intake Assistant")
 st.sidebar.write("Need help with Emergency Interim Housing (EIH)? Ask anything.")
 
 # Initialize chat history if not already present
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-# Display chat history
 for sender, message in st.session_state.chat_history:
     st.sidebar.markdown(f"**{sender}:** {message}")
 
 # user input area
-user_input = st.sidebar.text_input("You:", key="user_input", placeholder="e.g., Can I apply for shelter if I have a pet?")
+user_input = st.sidebar.text_input("You:", key="user_input",
+                                   placeholder="How can a person apply for housing with no ID?")
 
 # If user submits a message
-if user_input:
+if user_input and user_input.strip():
     # Add user message to chat history
     st.session_state.chat_history.append(("You", user_input))
 
     # Generate AI response using OpenAI
     with st.spinner("Thinking..."):
         try:
-            messages = [{"role": "system", "content": "You are a helpful assistant that specializes in Emergency Interim Housing (EIH) in San Jose and Santa Clara County. Be concise, helpful, and clear."}]
-            
+            messages = [{"role": "system",
+                         "content": "You are a helpful assistant that specializes in Emergency Interim Housing (EIH) in San Jose and Santa Clara County. Be concise, helpful, and clear."}]
+
             # Add all previous messages to maintain context
             for sender, message in st.session_state.chat_history:
                 role = "user" if sender == "You" else "assistant"
                 messages.append({"role": role, "content": message})
 
-            response = client.chat.completions.create(
+            response = openai.chat.completions.create(
                 model="gpt-4",
                 messages=messages,
                 temperature=0.6,

@@ -10,8 +10,7 @@ import openai
 import os
 from openai import OpenAI
 
-# for it to pop up on the sidebar
-st.sidebar.markdown("# Stakeholder Involvement 🤝")
+
 
 st.title("🤝 Stakeholder Roles in Emergency Interim Housing")
 st.caption("Understand how different sectors collaborate to support temporary housing solutions.")
@@ -66,47 +65,39 @@ st.markdown("""
 4. **Feedback Loops** through client surveys and staff debriefs
 """)
 
-st.markdown("---")
-st.header("📈 Example Collaborative Impact")
-st.success("""
-In 2024, San Francisco’s EIH Taskforce (15 agencies) housed 1,200+ people in 90 days.  
-They shared intake data, rotated mental health teams, and deployed mobile showers citywide.
-""")
-
-st.image("https://images.unsplash.com/photo-1573164574572-cb89e39749b4", caption="Community-first response model", use_column_width=True)
-
 
 # footer
 st.markdown("---")
 st.caption("Provided by the Sapphire Team 💎 • Powered by OpenAI & Streamlit")
 
-#------------------------------------------------------------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # chatbot on the side
-st.sidebar.title("💬 HelpBot")
+st.sidebar.title("💬 AI Housing Intake Assistant")
 st.sidebar.write("Need help with Emergency Interim Housing (EIH)? Ask anything.")
 
 # Initialize chat history if not already present
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-# Display chat history
 for sender, message in st.session_state.chat_history:
     st.sidebar.markdown(f"**{sender}:** {message}")
 
 # user input area
-user_input = st.sidebar.text_input("You:", key="user_input", placeholder="e.g., Can I apply for shelter if I have a pet?")
+user_input = st.sidebar.text_input("You:", key="user_input",
+                                   placeholder="How can a person apply for housing with no ID?")
 
 # If user submits a message
-if user_input:
+if user_input and user_input.strip():
     # Add user message to chat history
     st.session_state.chat_history.append(("You", user_input))
 
     # Generate AI response using OpenAI
     with st.spinner("Thinking..."):
         try:
-            messages = [{"role": "system", "content": "You are a helpful assistant that specializes in Emergency Interim Housing (EIH) in San Jose and Santa Clara County. Be concise, helpful, and clear."}]
-            
+            messages = [{"role": "system",
+                         "content": "You are a helpful assistant that specializes in Emergency Interim Housing (EIH) in San Jose and Santa Clara County. Be concise, helpful, and clear."}]
+
             # Add all previous messages to maintain context
             for sender, message in st.session_state.chat_history:
                 role = "user" if sender == "You" else "assistant"

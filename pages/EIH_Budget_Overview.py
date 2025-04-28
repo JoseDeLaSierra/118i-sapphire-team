@@ -8,8 +8,7 @@ import pandas as pd
 import openai
 import os
 
-# for it to pop up on the sidebar
-st.sidebar.markdown("# EIH Budget Overview 💰")
+
 
 # Page setup
 st.title("💰 EIH Budget Overview")
@@ -60,7 +59,7 @@ st.caption("Provided by the Sapphire Team 💎 • Powered by OpenAI & Streamlit
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # chatbot on the side
-st.sidebar.title("💬 HelpBot")
+st.sidebar.title("💬 AI Housing Intake Assistant")
 st.sidebar.write("Need help with Emergency Interim Housing (EIH)? Ask anything.")
 
 # Initialize chat history if not already present
@@ -71,7 +70,7 @@ for sender, message in st.session_state.chat_history:
     st.sidebar.markdown(f"**{sender}:** {message}")
 
 # user input area
-user_input = st.sidebar.text_input("You:", key="user_input", placeholder="e.g., Can I apply for shelter if I have a pet?")
+user_input = st.sidebar.text_input("You:", key="user_input", placeholder="How can a person apply for housing with no ID?")
 
 # If user submits a message
 if user_input and user_input.strip():

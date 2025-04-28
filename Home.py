@@ -16,21 +16,12 @@ st.markdown("👋 **Welcome to SmartHaven!** We're here to support your Emergenc
 
 # for table of contents
 st.subheader('Table of Contents', divider= 'blue')
-message = "Come explore our many resources! We aim to help streamline ur EIH process." 
-col1, col2 = st.columns(2)
-with col1:
-   st.page_link("pages/AI_Housing_Chat_Assistant.py", label="AI Housing Chat Assistant", icon="💬")
-   st.page_link("pages/AI_Intake_Assistant.py", label="AI Intake Assistant", icon="🧠")
-   st.page_link("pages/EIH_Budget_Overview.py", label="EIH Budget Overview", icon="💰")
-   st.page_link("pages/Eligibility_&_Requirements.py", label="Eligibility & Requirements", icon="📋")
 
-
-with col2:
-   st.page_link("pages/Language_&_Communication_Tools.py", label="Language & Communication Tools", icon="💬")
-   ##st.page_link("pages/Prototype.py", label="Prototype", icon="🔒")
-   st.page_link("pages/Reddit_Sentiment_Analyzer.py", label="Reddit Sentiment Analyzer", icon="📊")
-   st.page_link("pages/Resources_&_Help.py", label="Resources & Help", icon="🆘")
-   st.page_link("pages/Stakeholder_Involvement.py", label="Stakeholder Involvement", icon="🤝")
+st.page_link("pages/EIH_Budget_Overview.py", label="EIH Budget Overview", icon="💰")
+st.page_link("pages/Language_&_Communication_Tools.py", label="Language & Communication Tools", icon="💬")
+st.page_link("pages/Reddit_Sentiment_Analyzer.py", label="Reddit Sentiment Analyzer", icon="📊")
+st.page_link("pages/Resources_Locator.py", label="Resources Locator", icon="📍")
+st.page_link("pages/Stakeholder_Involvement.py", label="Stakeholder Involvement", icon="🤝")
 
 # button to apply for emergency housing or directed to it
 # Clear call-to-action: “Apply for Emergency Housing”
@@ -49,7 +40,6 @@ For further assistance or inquiries:
 ''')
 
 st.text("If you want to see more tailored resources, check out our resources page!")
-st.page_link("pages/Resources_&_Help.py", label="Resources & Help", icon="🆘")
 
 # footer
 st.markdown("---")
@@ -64,7 +54,7 @@ st.caption("Provided by the Sapphire Team 💎 • Powered by OpenAI & Streamlit
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # chatbot on the side
-st.sidebar.title("💬 HelpBot")
+st.sidebar.title("💬 AI Intake Housing Assistant")
 st.sidebar.write("Need help with Emergency Interim Housing (EIH)? Ask anything.")
 
 # Initialize message history

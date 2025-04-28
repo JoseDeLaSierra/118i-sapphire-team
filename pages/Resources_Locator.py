@@ -10,21 +10,16 @@ import os
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
-# for it to pop up on the sidebar
-st.sidebar.markdown("# Resources & Help 🆘 ")
 
 # page title
-st.title('Resources & Help 🆘 ')
-st.text('For individuals seeking emergency interim housing and support services in San Jose, CA!')
+st.title('Resources Locator 📍')
 
 
 # Ai Resource recommender
-st.subheader("🎯 AI Resource Recommender", divider='blue')
-st.text("📦 Choose Your Needs")
-st.text("This AI-powered application will generate any resources tailored to your needs and area!")
+st.text("This AI-powered tool will locate any resources specific to an area!")
 
 needs = st.multiselect(
-    "Select the services you need help with:",
+    "Select the services you need to locate:",
     ["Meals", "Mental Health Support", "Job Assistance", "Medical Access", 
      "Family Shelter", "Pet-Friendly Housing"]
 )
@@ -181,33 +176,34 @@ st.markdown('''
 st.markdown("---")
 st.caption("Provided by the Sapphire Team 💎 • Powered by OpenAI & Streamlit")
 
-#------------------------------------------------------------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # chatbot on the side
-st.sidebar.title("💬 HelpBot")
+st.sidebar.title("💬 AI Housing Intake Assistant")
 st.sidebar.write("Need help with Emergency Interim Housing (EIH)? Ask anything.")
 
 # Initialize chat history if not already present
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-# Display full chat history in the sidebar
 for sender, message in st.session_state.chat_history:
     st.sidebar.markdown(f"**{sender}:** {message}")
 
 # user input area
-user_input = st.sidebar.text_input("You:", key="user_input", placeholder="e.g., Can I apply for shelter if I have a pet?")
+user_input = st.sidebar.text_input("You:", key="user_input",
+                                   placeholder="How can a person apply for housing with no ID?")
 
 # If user submits a message
-if user_input:
+if user_input and user_input.strip():
     # Add user message to chat history
     st.session_state.chat_history.append(("You", user_input))
 
     # Generate AI response using OpenAI
     with st.spinner("Thinking..."):
         try:
-            messages = [{"role": "system", "content": "You are a helpful assistant that specializes in Emergency Interim Housing (EIH) in San Jose and Santa Clara County. Be concise, helpful, and clear."}]
-            
+            messages = [{"role": "system",
+                         "content": "You are a helpful assistant that specializes in Emergency Interim Housing (EIH) in San Jose and Santa Clara County. Be concise, helpful, and clear."}]
+
             # Add all previous messages to maintain context
             for sender, message in st.session_state.chat_history:
                 role = "user" if sender == "You" else "assistant"
